@@ -1,0 +1,103 @@
+# baseURI: http://example.org/ISOsam-OMlitesam-class
+
+@prefix ISO-OMlite: <http://example.org/ISO-OMlite#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://def.seegrid.csiro.au/isotc211/iso19107/2003/geometry#Curve>
+  rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/sam-lite#Curve> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19107/2003/geometry#Object>
+  rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/sam-lite#GeometryObject> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19107/2003/geometry#Point>
+  rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/sam-lite#Point> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19107/2003/geometry#Solid>
+  rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/sam-lite#Solid> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19107/2003/geometry#Surface>
+  rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/sam-lite#Surface> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling#Location>
+  rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/sam-lite#Location> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling#Process>
+  rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/sam-lite#Process> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling#SamplingCurve>
+  rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/sam-lite#SamplingCurve> ;
+  rdfs:subClassOf [] ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling#SamplingFeature>
+  rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/sam-lite#SamplingFeature> ;
+  rdfs:subClassOf [] ;
+  rdfs:subClassOf [] ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling#SamplingFeatureComplex>
+  rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/sam-lite#SamplingFeatureComplex> ;
+  rdfs:subClassOf [] ;
+  rdfs:subClassOf [] ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling#SamplingPoint>
+  rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/sam-lite#SamplingPoint> ;
+  rdfs:subClassOf [] ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling#SamplingSolid>
+  rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/sam-lite#SamplingSolid> ;
+  rdfs:subClassOf [] ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling#SamplingSurface>
+  rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/sam-lite#SamplingSurface> ;
+  rdfs:subClassOf [] ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling#SpatialSamplingFeature>
+  rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/sam-lite#SpatialSamplingFeature> ;
+  rdfs:subClassOf [] ;
+  rdfs:subClassOf [] ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling#Specimen>
+  rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/sam-lite#Specimen> ;
+  rdfs:subClassOf [] ;
+  rdfs:subClassOf [] ;
+  rdfs:subClassOf [] ;
+  rdfs:subClassOf [] ;
+  rdfs:subClassOf [] ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling#currentLocation>
+  rdfs:subPropertyOf <http://def.seegrid.csiro.au/ontology/sam-lite#currentLocation> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling#hostedProcedure>
+  rdfs:subPropertyOf <http://def.seegrid.csiro.au/ontology/sam-lite#hostedProcedure> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling#relatedSamplingFeature>
+  rdfs:subPropertyOf <http://def.seegrid.csiro.au/ontology/sam-lite#relatedSamplingFeature> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling#role>
+  rdfs:subPropertyOf <http://def.seegrid.csiro.au/ontology/sam-lite#role> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling#sampledFeature>
+  rdfs:subPropertyOf <http://def.seegrid.csiro.au/ontology/sam-lite#sampledFeature> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling#samplingFeatureComplex>
+  rdfs:subPropertyOf <http://def.seegrid.csiro.au/ontology/sam-lite#samplingFeatureComplex> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling#samplingLocation>
+  rdfs:subPropertyOf <http://def.seegrid.csiro.au/ontology/sam-lite#samplingLocation> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling#samplingMethod>
+  rdfs:subPropertyOf <http://def.seegrid.csiro.au/ontology/sam-lite#samplingMethod> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling#samplingTime>
+  rdfs:subPropertyOf <http://def.seegrid.csiro.au/ontology/sam-lite#samplingTime> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling#shape>
+  rdfs:subPropertyOf <http://def.seegrid.csiro.au/ontology/sam-lite#shape> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling#size>
+  rdfs:subPropertyOf <http://def.seegrid.csiro.au/isotc211/iso19103/2005/basic#measure> ;
+  rdfs:subPropertyOf <http://def.seegrid.csiro.au/ontology/sam-lite#size> ;
+.

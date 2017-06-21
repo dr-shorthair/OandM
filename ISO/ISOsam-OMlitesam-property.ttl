@@ -1,0 +1,56 @@
+# baseURI: http://example.org/ISOsam-OMlitesam-property
+# imports: http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling
+# imports: http://def.seegrid.csiro.au/ontology/sampling
+# imports: http://rdfs.org/ns/void
+
+@prefix ISO-OMlite: <http://example.org/ISO-OMlite#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling#currentLocation>
+  rdfs:subPropertyOf <http://def.seegrid.csiro.au/ontology/sampling#currentLocation> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling#hostedProcedure>
+  rdfs:subPropertyOf <http://def.seegrid.csiro.au/ontology/sampling#hostedProcedure> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling#relatedSamplingFeature>
+  rdfs:subPropertyOf <http://def.seegrid.csiro.au/ontology/sampling#relatedSamplingFeature> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling#role>
+  rdfs:subPropertyOf <http://def.seegrid.csiro.au/ontology/sampling#role> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling#sampledFeature>
+  rdfs:subPropertyOf <http://def.seegrid.csiro.au/ontology/sampling#sampledFeature> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling#samplingFeatureComplex>
+  rdfs:subPropertyOf <http://def.seegrid.csiro.au/ontology/sampling#samplingFeatureComplex> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling#samplingLocation>
+  rdfs:subPropertyOf <http://def.seegrid.csiro.au/ontology/sampling#samplingLocation> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling#samplingMethod>
+  rdfs:subPropertyOf <http://def.seegrid.csiro.au/ontology/sampling#samplingMethod> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling#samplingTime>
+  rdfs:subPropertyOf <http://def.seegrid.csiro.au/ontology/sampling#samplingTime> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling#shape>
+  rdfs:subPropertyOf <http://def.seegrid.csiro.au/ontology/sampling#shape> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling#size>
+  rdfs:subPropertyOf <http://def.seegrid.csiro.au/ontology/sampling#size> ;
+.
+<http://example.org/ISOsam-OMlitesam-property>
+  rdf:type void:Linkset ;
+  rdf:type owl:Ontology ;
+  void:linkPredicate rdfs:subPropertyOf ;
+  void:target <http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling> ;
+  void:target <http://def.seegrid.csiro.au/ontology/sampling> ;
+  owl:imports <http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling> ;
+  owl:imports <http://def.seegrid.csiro.au/ontology/sampling> ;
+  owl:imports <http://rdfs.org/ns/void> ;
+  owl:versionInfo "Created with TopBraid Composer"^^xsd:string ;
+.

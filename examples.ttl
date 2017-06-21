@@ -1,0 +1,183 @@
+# baseURI: http://example.org/my
+# imports: http://def.seegrid.csiro.au/ontology/om/om
+# imports: http://def.seegrid.csiro.au/ontology/om/sam
+# imports: https://www.w3.org/ns/sosa/prov
+
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix my: <http://example.org/my/> .
+@prefix om: <http://def.seegrid.csiro.au/ontology/om/om#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sam: <http://def.seegrid.csiro.au/ontology/om/sam#> .
+@prefix sampling: <http://www.w3.org/ns/sosa/sampling/> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix ssn: <http://www.w3.org/ns/ssn/> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix w3geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.org/my>
+  rdf:type owl:Ontology ;
+  dct:modified "2017-06-21"^^xsd:date ;
+  owl:imports <http://def.seegrid.csiro.au/ontology/om/om> ;
+  owl:imports <http://def.seegrid.csiro.au/ontology/om/sam> ;
+  owl:imports <https://www.w3.org/ns/sosa/prov> ;
+.
+my:OPTest1
+  rdf:type sosa:Observation ;
+  rdfs:comment "Observation instance with remote result" ;
+  rdfs:comment "See C.2.3 in OMXML, OGC 10-025r1" ;
+  rdfs:label "Observation Pointer 1" ;
+  sosa:hasFeatureOfInterest <http://my.example.org/wfs%26request=getFeature%26;featureid=789002> ;
+  sosa:hasResult <http://my.example.org/results%3f798002%26property=RH> ;
+  sosa:observedProperty <http://vocab.nerc.ac.uk/collection/I01/current/0.1.1/> ;
+  sosa:phenomenonTime [
+      rdf:type time:ProperInterval ;
+      time:hasBeginning [
+          rdf:type time:Instant ;
+          time:inXSDDateTime "2005-01-11T17:22:25.00"^^xsd:dateTime ;
+        ] ;
+      time:hasEnd [
+          rdf:type time:Instant ;
+          time:inXSDDateTime "2005-01-11T18:22:25.00"^^xsd:dateTime ;
+        ] ;
+    ] ;
+  sosa:resultTime "2005-01-11T18:22:25.00"^^xsd:dateTime ;
+.
+my:Sscales1
+  rdf:type sosa:Sensor ;
+  rdfs:label "Salter scales" ;
+.
+my:m1
+  rdf:type om:Measurement ;
+  rdfs:comment "See Listing 1, B.2.2 in OMXML, OGC 10-025r1" ;
+  rdfs:label "Example measurement instance" ;
+  sosa:hasFeatureOfInterest <http://wfs.example.org?request=getFeature&amp;featureid=f37f> ;
+  sosa:hasResult [
+      rdf:type om:MeasureObject ;
+      om:uom <http://qudt.org/vocab/unit#Kilogram> ;
+      rdf:value "0.28"^^xsd:double ;
+    ] ;
+  sosa:madeBySensor <http://www.example.org/register/process/scales34.xml> ;
+  sosa:observedProperty <urn:ogc:def:phenomenon:OGC:mass> ;
+  sosa:phenomenonTime [
+      rdf:type time:Instant ;
+      time:inXSDDateTime "2005-01-11T16:22:25.00"^^xsd:dateTime ;
+    ] ;
+  sosa:resultTime "2005-01-11T16:22:25.00"^^xsd:dateTime ;
+.
+my:obsTest1
+  rdf:type om:Measurement ;
+  rdfs:comment "Observation test instance: fruit mass" ;
+  rdfs:comment "See 5.1 in SSN paper" ;
+  rdfs:comment "See C.2.1 in OMXML, OGC 10-025r1" ;
+  rdfs:label "Observation test 1" ;
+  sosa:hasFeatureOfInterest <http://wfs.example.org?request=getFeature&amp;featureid=fruit37f> ;
+  sosa:hasResult [
+      rdf:type om:SimpleMeasure ;
+      om:amount "0.28"^^xsd:double ;
+      om:uom <http://www.opengis.net/def/uom/UCUM/0/kg> ;
+    ] ;
+  sosa:madeBySensor my:Sscales1 ;
+  sosa:observedProperty <http://sweet.jpl.nasa.gov/2.0/phys.owl#Mass> ;
+  sosa:phenomenonTime [
+      rdf:type time:Instant ;
+      time:inXSDDateTime "2005-01-11T16:22:25.00"^^xsd:dateTime ;
+    ] ;
+  sosa:resultTime "2005-01-11T16:22:25.00"^^xsd:dateTime ;
+.
+my:parent
+  rdf:type owl:ObjectProperty ;
+  rdfs:label "Special sampling feature relation that asserts that the target is the parent of the source" ;
+  rdfs:subPropertyOf sampling:relatedSample ;
+.
+my:pr1_s2
+  rdf:type sam:Specimen ;
+  rdf:type <http://www.opengis.net/def/material/OGC-OM/2.0/rock> ;
+  sam:currentLocation <http://www.opengis.net/def/nil/OGC‐OM/2.0/destroyed> ;
+  sam:samplingLocation [
+      rdf:type w3geo:Point ;
+      w3geo:alt 272.0 ;
+      w3geo:lat -30.706 ;
+      w3geo:long 134.196 ;
+    ] ;
+  sam:samplingMethod <http://geochemistry.example.org/splits/biased/density/greaterThan/2.9> ;
+  rdfs:comment "Rock sample collected on traverse" ;
+  rdfs:comment "See C.4 in OMXML, OGC 10-025r1" ;
+  prov:wasDerivedFrom <http://my.geology.example.org/projects/2007/pr1_s1> ;
+  sosa:isSampleOf <http://my.geology.example.org/unit/g345> ;
+  sosa:resultTime "2007-01-29T12:19:55.00+09:00"^^xsd:dateTime ;
+  sampling:hasSampleRelationship [
+      rdf:type sampling:sampleRelationship ;
+      sampling:natureOfRelationship <http://www/example/org/sampling/parentSpecimen> ;
+      sampling:relatedSample <http://my.geology.example.org/projects/2007/pr1_s1> ;
+    ] ;
+.
+<http://example.org/various/sf-process/jkl987>
+  rdf:type prov:Activity ;
+.
+<http://handle.net/10273/IGSN.SIOabc123>
+  rdf:type sam:Specimen ;
+  rdf:type my:splitCore ;
+  rdf:type <http://www.opengis.net/def/material/OGC-OM/2.0/rock> ;
+  sam:currentLocation <http://example.org/various/Warehouse3/shelf9/box67> ;
+  sam:samplingLocation [
+      rdf:type w3geo:Point ;
+      w3geo:alt -1272.0 ;
+      w3geo:lat 24.97 ;
+      w3geo:long -45.87 ;
+    ] ;
+  sam:size [
+      rdf:type om:SimpleMeasure ;
+      om:amount "0.46"^^xsd:double ;
+      om:uom <http://qudt.org/vocab/unit#Kilogram> ;
+    ] ;
+  my:parent <http://handle.net/10273/IGSN.SIOxyz456> ;
+  rdfs:comment "See 5.2 in SSN paper" ;
+  rdfs:label "SIO specimen abc123" ;
+  prov:wasDerivedFrom <http://handle.net/10273/IGSN.SIOxyz456> ;
+  prov:wasGeneratedBy [
+      rdf:type prov:Activity ;
+      prov:endedAtTime "2013-08-02T08:15:00.00+11:00"^^xsd:dateTime ;
+      prov:used <http://handle.net/10273/IGSN.SIOxyz456> ;
+      prov:wasAssociatedWith my:JohnDoe ;
+      prov:wasInformedBy <http://example.org/various/sf-process/jkl987> ;
+    ] ;
+  sosa:isSampleOf my:midAtlanticRidge ;
+  sosa:madeBySampler <http://ldeo.columbia.edu/sampling/ghostbuster> ;
+  sosa:resultTime "2013-06-12T09:25:00.00+11:00"^^xsd:dateTime ;
+  sampling:hasSampleRelationship [
+      rdf:type sampling:sampleRelationship ;
+      sampling:natureOfRelationship my:parent ;
+      sampling:relatedSample <http://handle.net/10273/IGSN.SIOxyz456> ;
+    ] ;
+.
+<http://my.hydrology.example.org/catchments/Potamos#st2>
+  rdf:type sam:SamplingPoint ;
+  om:relatedObservation <http://my.hydrology.example.org/chemistry/2007/rtg108q> ;
+  om:relatedObservation <http://my.hydrology.example.org/chemistry/2007/rtg78n> ;
+  sam:shape time:Point_1 ;
+  sam:shape [
+      rdf:type w3geo:Point ;
+      w3geo:alt "350.0" ;
+      w3geo:lat "-37.34" ;
+      w3geo:long "146.2" ;
+    ] ;
+  rdfs:comment "Hydrology sampling station" ;
+  rdfs:comment "See C.3.1 in OMXML, OGC 10-025r1" ;
+  prov:wasMemberOf <http://my.example.org/wfs?request=getFeature;featureid=coll32> ;
+  sosa:isSampleOf <http://my.hydrology.example.org/catchments/Potamos> ;
+  sampling:hasSampleRelationship [
+      rdf:type sampling:sampleRelationship ;
+      sampling:natureOfRelationship <http://www.example.org/complex/member> ;
+      sampling:relatedSample <http://my.example.org/wfs?request=getFeature;featureid=coll32> ;
+    ] ;
+.
+time:Point_1
+  rdf:type w3geo:Point ;
+  w3geo:alt "321.0" ;
+  w3geo:lat "-33.5" ;
+.

@@ -1,0 +1,84 @@
+# baseURI: http://example.org/ISOom-OMliteom-class
+
+@prefix ISO-OMlite: <http://example.org/ISO-OMlite#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://def.seegrid.csiro.au/isotc211/iso19108/2002/temporal#Object>
+  rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/om-lite#TemporalObject> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/observation#CategoryObservation>
+  rdfs:subClassOf [] ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/observation#CountObservation>
+  rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/om-lite#CountObservation> ;
+  rdfs:subClassOf [] ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/observation#DiscreteCoverageObservation>
+  rdfs:subClassOf [] ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/observation#GeometryObservation>
+  rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/om-lite#GeometryObservation> ;
+  rdfs:subClassOf [] ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/observation#Measurement>
+  rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/om-lite#Measurement> ;
+  rdfs:subClassOf [] ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/observation#Observation>
+  rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/om-lite#Observation> ;
+  rdfs:subClassOf [] ;
+  rdfs:subClassOf [] ;
+  rdfs:subClassOf [] ;
+  rdfs:subClassOf [] ;
+  rdfs:subClassOf [] ;
+  rdfs:subClassOf [] ;
+  rdfs:subClassOf [] ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/observation#ObservationContext>
+  rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/om-lite#ObservationContext> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/observation#PointCoverageObservation>
+  rdfs:subClassOf [] ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/observation#Process>
+  rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/om-lite#Process> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/observation#TemporalObservation>
+  rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/om-lite#TemporalObservation> ;
+  rdfs:subClassOf [] ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/observation#TimeSeriesObservation>
+  rdfs:subClassOf [] ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/observation#TruthObservation>
+  rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/om-lite#TruthObservation> ;
+  rdfs:subClassOf [] ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/observation#featureOfInterest>
+  rdfs:subPropertyOf <http://def.seegrid.csiro.au/ontology/om/om-lite#featureOfInterest> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/observation#observationContext>
+  rdfs:subPropertyOf <http://def.seegrid.csiro.au/ontology/om/om-lite#observationContext> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/observation#observedProperty>
+  rdfs:subPropertyOf <http://def.seegrid.csiro.au/ontology/om/om-lite#observedProperty> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/observation#phenomenonTime>
+  rdfs:subPropertyOf <http://def.seegrid.csiro.au/ontology/om/om-lite#phenomenonTime> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/observation#procedure>
+  rdfs:subPropertyOf <http://def.seegrid.csiro.au/ontology/om/om-lite#procedure> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/observation#relatedObservation>
+  rdfs:subPropertyOf <http://def.seegrid.csiro.au/ontology/om/om-lite#relatedObservation> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/observation#result>
+  rdfs:subPropertyOf <http://def.seegrid.csiro.au/ontology/om/om-lite#result> ;
+.
+<http://def.seegrid.csiro.au/isotc211/iso19156/2011/observation#resultTime>
+  rdfs:subPropertyOf <http://def.seegrid.csiro.au/ontology/om/om-lite#resultTime> ;
+.

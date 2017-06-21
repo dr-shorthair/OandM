@@ -1,0 +1,344 @@
+# baseURI: http://def.seegrid.csiro.au/ontology/om/sam
+# imports: http://purl.org/dc/elements/1.1/
+# imports: http://www.w3.org/ns/prov-o#
+# imports: http://www.w3.org/ns/sosa/sampling
+# imports: http://www.w3.org/ns/ssn/
+# prefix: sam
+
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix my: <http://example.org/my/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sam: <http://def.seegrid.csiro.au/ontology/om/sam#> .
+@prefix sampling: <http://www.w3.org/ns/sosa/sampling/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix ssn: <http://www.w3.org/ns/ssn/> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix voaf: <http://purl.org/vocommons/voaf#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://def.seegrid.csiro.au/ontology/om/sam>
+  rdf:type owl:Ontology ;
+  dc:creator """Simon Jonathan David COX
+CSIRO"""^^rdf:PlainLiteral ;
+  dc:description "An OWL representation of the Sampling Features Schema described in clauses 9-11 of ISO 19156:2011 Geographic Information - Observations and Measurements" ;
+  dc:rights "Copyright © 2014, 2015 CSIRO" ;
+  dc:source "ISO 19156:2011" ;
+  dc:title "OWL for Sampling Features" ;
+  dct:created "2014-10-07"^^xsd:date ;
+  dct:creator <http://orcid.org/0000-0002-3884-3420> ;
+  dct:license <http://creativecommons.org/licenses/by/3.0/au/> ;
+  dct:modified "2017-06-21"^^xsd:date ;
+  vann:preferredNamespacePrefix "sam:" ;
+  vann:preferredNamespaceUri <http://def.seegrid.csiro.au/ontology/om/sam> ;
+  rdfs:comment """An OWL representation of the Sampling Features Schema described in clauses 9-11 of ISO 19156:2011 Geographic Information - Observations and Measurements. 
+This is built on top of W3C/OGC SOSA/SSN ontology which includes a Sample class. 
+It adds the experimental elements
+- SampleCollection
+- samplngElevation""" ;
+  rdfs:label "OWL for Sampling Features" ;
+  owl:imports dc: ;
+  owl:imports <http://www.w3.org/ns/prov-o#> ;
+  owl:imports sosa:sampling ;
+  owl:imports ssn: ;
+  owl:priorVersion <http://def.seegrid.csiro.au/ontology/om/sam-lite> ;
+  skos:changeNote "2015-08-18 Added samfl:SamplingCollection class to domain of samfl:sampledFeature" ;
+  skos:changeNote "2015-08-27 Added samfl:materialClass property, rdfs:domain samfl:Specimen" ;
+  skos:changeNote "2015-09-18 Added samfl:samplingElevation property, rdfs:domain samfl:Specimen" ;
+  skos:changeNote "2015-11-17 Added samfl:member property, with fixed domain (SamplingCollection) and range (SamplingFeature), in place of rdfs:member, which is not liked by OWL-API. " ;
+  skos:changeNote "2017-06-21 Refactored on top of SOSA/SSSN" ;
+.
+sam:Curve
+  rdf:type owl:Class ;
+  dct:description "1-D geometric object" ;
+  rdfs:comment """1-D geometric object
+
+This stub is included in the sam: ontology to support constraints on the sam:shape property of a sam:SamplingCurve.  An existing OWL class that represents the notion of a Curve may be asserted to be a sub-class of this stub, but without requiring use of any particular representation of Curve in the context of a sam:SamplingCurve instance.""" ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam> ;
+  rdfs:label "Spatial curve" ;
+  rdfs:subClassOf sam:GeometryObject ;
+.
+sam:Elevation
+  rdf:type owl:Class ;
+  dct:description "Simple model for elevation, expressed as a vertical offset from a datum" ;
+  rdfs:comment "Simple model for elevation, expressed as a vertical offset from a datum" ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam> ;
+  rdfs:label "Elevation" ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty sam:elevation ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty sam:verticalDatum ;
+    ] ;
+.
+sam:GeometryObject
+  rdf:type owl:Class ;
+  dct:description "Geometry object has properties relating to geometry, incuding positional and topological attributes, reference system, accuracy and precision. Might be geolocated. " ;
+  rdfs:comment """Geometry object has properties relating to geometry, incuding positional and topological attributes, reference system, accuracy and precision. Might be geolocated. 
+
+This stub is included in the sam: ontology to support references to geometry in various places.  An existing concrete OWL class that represents the notion of a geometry may be asserted to be a sub-class of this stub, without requiring use of a specific representation of Geometry in the context of sampling.""" ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam> ;
+  rdfs:label "Geometry object" ;
+  rdfs:subClassOf sam:Location ;
+  rdfs:subClassOf owl:Thing ;
+  owl:equivalentClass <http://def.seegrid.csiro.au/ontology/om/om#GeometryObject> ;
+.
+sam:Location
+  rdf:type owl:Class ;
+  dct:description "Location, expressed as either a geometry object or feature" ;
+  rdfs:comment """Location, expressed as either a geometry object or feature
+
+samfl:GeometryObject is subclass
+
+w3geo:SpatialThing, geosparql:SpatialObject are subclasses""" ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam> ;
+  rdfs:label "Location" ;
+.
+sam:Measure
+  rdf:type owl:Class ;
+  dct:description "Scaled number. " ;
+  rdfs:comment """Scaled number. 
+
+This is an abstract class, which should be substituted by a suitable concrete representation of a measure or quantity at run-tme. 
+
+oml:SimpleMeasure <http://def.seegrid.csiro.au/ontology/om/om-lite#SimpleMeasure>
+qudt:QuantityValue <http://qudt.org/schema/qudt#QuantityValue> 
+DUL:Region <http://www.loa-cnr.it/ontologies/DUL.owl#Region> 
+
+are candidates. """ ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam> ;
+  rdfs:label "Measure or quantity" ;
+  owl:equivalentClass <http://def.seegrid.csiro.au/ontology/om/om#MeasureObject> ;
+.
+sam:Point
+  rdf:type owl:Class ;
+  dct:description "0-D geometric object" ;
+  rdfs:comment """0-D geometric object
+
+This stub is included in the sam: ontology to support constraints on the sam:shape property of a sam:SamplingPoint.  An existing OWL class that represents the notion of a Point may be asserted to be a sub-class of this stub, but without requiring use of any particular representation of Point in the context of a sam:SamplingPoint instance.""" ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam> ;
+  rdfs:label "Spatial point" ;
+  rdfs:subClassOf sam:GeometryObject ;
+.
+sam:SampleCollection
+  rdf:type owl:Class ;
+  dct:description "Collection of features on which observations may be made, which are intended to be representative of one or more features that are not fully accessible for some reason. " ;
+  rdfs:comment "The member sampling features are intended to sample domain features, as indicated by one or more sampledFeature properties. If only one is present then this is the sampled feature of all the member sampling features, unless locally overridden." ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam> ;
+  rdfs:label "Collection of sampling features"@en ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom sosa:FeatureOfInterest ;
+      owl:onProperty sosa:isSampleOf ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty sam:member ;
+    ] ;
+.
+sam:SamplingCurve
+  rdf:type owl:Class ;
+  dct:description "Spatial sampling feature whose shape is a 1-D manifold (Curve)" ;
+  rdfs:comment """Spatial sampling feature whose shape is a 1-D manifold (Curve)
+
+Transect, traverse, flightline, cruise, trajectory, borehole, etc""" ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam> ;
+  rdfs:label "Sampling curve"@en ;
+  rdfs:subClassOf sam:SpatialSamplingFeature ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom sam:Curve ;
+      owl:onProperty sam:shape ;
+    ] ;
+.
+sam:SamplingPoint
+  rdf:type owl:Class ;
+  dct:description "Spatial sampling feature whose shape is a 0-D manifold (Point)" ;
+  rdfs:comment """Spatial sampling feature whose shape is a 0-D manifold (Point)
+
+Often referred to as a 'station', 'pixel', 'probe-spot' etc.""" ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam> ;
+  rdfs:label "Sampling point"@en ;
+  rdfs:subClassOf sam:SpatialSamplingFeature ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom sam:Point ;
+      owl:onProperty sam:shape ;
+    ] ;
+.
+sam:SamplingSolid
+  rdf:type owl:Class ;
+  dct:description "Spatial sampling feature whose shape is a 3-D manifold (Solid)" ;
+  rdfs:comment "Spatial sampling feature whose shape is a 3-D manifold (Solid)" ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam> ;
+  rdfs:label "Sampling solid"@en ;
+  rdfs:subClassOf sam:SpatialSamplingFeature ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom sam:Solid ;
+      owl:onProperty sam:shape ;
+    ] ;
+.
+sam:SamplingSurface
+  rdf:type owl:Class ;
+  dct:description "Spatial sampling feature whose shape is a 2-D manifold (Surface)" ;
+  rdfs:comment """Spatial sampling feature whose shape is a 2-D manifold (Surface)
+
+Scene, swath, cross-section, level, quadrat, area-of-interest, fence, etc.""" ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam> ;
+  rdfs:label "Sampling surface"@en ;
+  rdfs:subClassOf sam:SpatialSamplingFeature ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom sam:Surface ;
+      owl:onProperty sam:shape ;
+    ] ;
+.
+sam:Solid
+  rdf:type owl:Class ;
+  dct:description "3-D geometric object, whose exterior is a shell" ;
+  rdfs:comment """3-D geometric object, whose exterior is a shell
+
+This stub is included in the sam: ontology to support constraints on the sam:shape property of a sam:SamplingSolid.  An existing OWL class that represents the notion of a Solid may be asserted to be a sub-class of this stub, but without requiring use of any particular representation of Solid in the context of a sam:SamplingSolid instance.""" ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam> ;
+  rdfs:label "Spatial solid" ;
+  rdfs:subClassOf sam:GeometryObject ;
+.
+sam:SpatialSamplingFeature
+  rdf:type owl:Class ;
+  dct:description "Sampling feature whose defining characteristic is that it samples the intended feature by geometric subsetting." ;
+  rdfs:comment """Sampling feature whose defining characteristic is that it samples the intended feature by geometric subsetting.
+
+When observations are made to estimate properties of a geospatial feature, in particular where the value of a property varies within the scope of the feature, a spatial sampling feature is used. Depending on accessibility and on the nature of the expected property variation, the sampling feature may be extensive in one, two or three spatial dimensions. Processing and visualization methods are often dependent on the topological dimension of the sampling manifold, so this provides a natural classification system for sampling features.
+
+This classification follows common practice in focussing on conventional spatial dimensions. Properties observed on sampling features may be time-dependent, but the temporal axis does not generally contribute to the classification of sampling feature classes. Sampling feature identity is usually less time-dependent than the property value.""" ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam> ;
+  rdfs:label "Spatial sampling feature"@en ;
+  rdfs:subClassOf sosa:Platform ;
+  rdfs:subClassOf sosa:Sample ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty sam:shape ;
+    ] ;
+.
+sam:Specimen
+  rdf:type owl:Class ;
+  dct:description "A Specimen is a material sample, obtained for observation(s) normally carried out ex-situ, sometimes in a laboratory." ;
+  rdfs:comment "A Specimen is a material sample, obtained for observation(s) normally carried out ex-situ, sometimes in a laboratory." ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam> ;
+  rdfs:label "Specimen"@en ;
+  rdfs:subClassOf sosa:Sample ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty sosa:resultTime ;
+    ] ;
+.
+sam:Surface
+  rdf:type owl:Class ;
+  dct:description "2-D geometric object, whose exterior is a ring or polygon" ;
+  rdfs:comment "This stub is included in the sam: ontology to support constraints on the sam:shape property of a sam:SamplingSurface.  An existing OWL class that represents the notion of a Surface may be asserted to be a sub-class of this stub, but without requiring use of any particular representation of Surface in the context of a sam:SamplingSurface instance." ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam> ;
+  rdfs:label "Spatial surface" ;
+  rdfs:subClassOf sam:GeometryObject ;
+.
+sam:currentLocation
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment """If present, the attribute currentLocation:Location shall describe the location of a physical specimen. This may be a storage location, such as a shelf in a warehouse or a drawer in a museum.
+
+NOTE If a specimen no longer exists, for example, it was destroyed in connection with an observation act, then the currentLocation should be omitted or carry a suitable null indicator.""" ;
+  rdfs:domain sam:Specimen ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam> ;
+  rdfs:label "current location" ;
+  rdfs:range sam:Location ;
+  skos:definition """If present, the attribute currentLocation:Location shall describe the location of a physical specimen. This may be a storage location, such as a shelf in a warehouse or a drawer in a museum.
+
+NOTE If a specimen no longer exists, for example, it was destroyed in connection with an observation act, then the currentLocation should be omitted or carry a suitable null indicator.""" ;
+.
+sam:elevation
+  rdf:type owl:DatatypeProperty ;
+  rdfs:label "vertical offset from a datum" ;
+  rdfs:range [
+      rdf:type rdfs:Datatype ;
+      owl:unionOf (
+          xsd:float
+          xsd:double
+          xsd:decimal
+        ) ;
+    ] ;
+.
+sam:materialClass
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment """Value should be taken from a vocabulary of material classes. 
+
+e.g. aqueous liquid, non-aqueous liquid, soil, rock, tissue, vegetation (broad case) or finer classifications if available""" ;
+  rdfs:domain sam:Specimen ;
+  rdfs:label "class of material" ;
+.
+sam:member
+  rdf:type owl:ObjectProperty ;
+  rdfs:domain sam:SampleCollection ;
+  rdfs:label "has member" ;
+  rdfs:range sosa:Sample ;
+.
+sam:samplingElevation
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment """If present, the attribute samplingElevation shall describe the elevation from where the specimen was obtained, relative to the sampling location.
+
+NOTE Where a specimen has a relatedSamplingFeature whose location provides an unambiguous elevation then this attribute is not required. However, if the specific elevationat the location, then this attribute supports its description.""" ;
+  rdfs:domain sam:Specimen ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam> ;
+  rdfs:label "sampling elevation" ;
+  rdfs:range sam:Elevation ;
+  skos:definition """If present, the attribute samplingElevation shall describe the elevation from where the specimen was obtained, relative to the sampling location.
+
+NOTE Where a specimen has a relatedSamplingFeature whose location provides an unambiguous elevation then this attribute is not required. However, if the specific elevationat the location, then this attribute supports its description.""" ;
+.
+sam:samplingLocation
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment """If present, the attribute samplingLocation:GM_Object shall describe the location from where the specimen was obtained.
+
+NOTE Where a specimen has a relatedSamplingFeature whose location provides an unambiguous location then this attribute is not required. However, if the specific sampling location within the sampledFeature is important, then this attribute supports its description.""" ;
+  rdfs:domain sam:Specimen ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam> ;
+  rdfs:label "sampling location" ;
+  rdfs:range sam:Location ;
+  skos:definition """If present, the attribute samplingLocation:GM_Object shall describe the location from where the specimen was obtained.
+
+NOTE Where a specimen has a relatedSamplingFeature whose location provides an unambiguous location then this attribute is not required. However, if the specific sampling location within the sampledFeature is important, then this attribute supports its description.""" ;
+.
+sam:shape
+  rdf:type owl:FunctionalProperty ;
+  rdf:type owl:ObjectProperty ;
+  rdfs:domain sam:SpatialSamplingFeature ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam> ;
+  rdfs:label "spatial sampling feature shape" ;
+  rdfs:range sam:GeometryObject ;
+  skos:definition "The association Geometry shall link an SF_SpatialSamplingFeature to a GM_Object that describes its shape." ;
+.
+sam:size
+  rdf:type owl:ObjectProperty ;
+  rdfs:domain sam:Specimen ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam> ;
+  rdfs:label "specimen size" ;
+  rdfs:range sam:Measure ;
+  skos:definition "the attribute size:Measure shall describe a physical extent of the specimen. This may be length, mass, volume, etc., as appropriate for the specimen instance and its material class." ;
+.
+sam:verticalDatum
+  rdf:type owl:ObjectProperty ;
+  rdfs:label "vertical (elevation) datum" ;
+.
+sosa:Sample
+  rdfs:subClassOf prov:Entity ;
+.

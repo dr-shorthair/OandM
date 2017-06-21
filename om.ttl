@@ -1,0 +1,359 @@
+# baseURI: http://def.seegrid.csiro.au/ontology/om/om
+# imports: http://purl.org/dc/elements/1.1/
+# imports: http://www.w3.org/ns/ssn/
+# prefix: om
+
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix om: <http://def.seegrid.csiro.au/ontology/om/om#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix ssn: <http://www.w3.org/ns/ssn/> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix voaf: <http://purl.org/vocommons/voaf#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://def.seegrid.csiro.au/ontology/om/om>
+  rdf:type owl:Ontology ;
+  dc:creator """Simon Jonathan David COX
+CSIRO""" ;
+  dc:description "An OWL representation of the Observation Schema described in clauses 7-8 of ISO 19156:2011 Geographic Information - Observations and Measurements / OGC Abstract Specification - Topic 20." ;
+  dc:rights "Copyright © 2014, 2015, 2016, 2017 CSIRO" ;
+  dc:source "ISO 19156:2011" ;
+  dc:title "OWL for Observations" ;
+  dct:created "2017-06-21"^^xsd:date ;
+  dct:creator <http://orcid.org/0000-0002-3884-3420> ;
+  dct:license <http://creativecommons.org/licenses/by/4.0/> ;
+  dct:modified "2017-06-21"^^xsd:date ;
+  vann:preferredNamespacePrefix "om:" ;
+  vann:preferredNamespaceUri <http://def.seegrid.csiro.au/ontology/om/om> ;
+  rdfs:comment """An OWL representation of the Observation Schema described in clauses 7-8 of ISO 19156:2011 Geographic Information - Observations and Measurements, adapted to build on the W3C/OGC SOSA/SSN ontologies, with additional support for experimental features
+- Observation Collection
+- stimulus time
+- sampling strategy
+""" ;
+  rdfs:label "OWL for observations and collections of observations" ;
+  owl:imports dc: ;
+  owl:imports ssn: ;
+  owl:priorVersion <http://def.seegrid.csiro.au/ontology/om/om-lite> ;
+  skos:changeNote "2015-03-06	Added samplingStrategy property, in order to separate sampling from the feature of interest" ;
+  skos:changeNote "2015-08-18 Added ObservationCollection class; added to domain of key Observation properties (except oml:result) to support inheritance of common properties from a container. " ;
+  skos:changeNote "2015-11-17 Added oml:member property, with fixed domain (ObservationCollection) and range (Observation), in place of rdfs:member, which is not liked by OWL-API. " ;
+  skos:changeNote "2016-01-20 In order to satisfy OWLAPI requirements, changed oml:result to an ObjectProperty; changed the constraints on CountObservation and TruthObservation to refer to newly created CountObject and TruthObject to encapsulate the values as objects. " ;
+  skos:changeNote "2016-10-27 Add stimulus-time property" ;
+  skos:changeNote "2017-06-21 Refactored to extend SOSA/SSN" ;
+.
+om:CountObject
+  rdf:type owl:Class ;
+  rdfs:comment "Object to wrap a count value" ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om> ;
+  rdfs:label "Count object" ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty om:count ;
+    ] ;
+.
+om:CountObservation
+  rdf:type owl:Class ;
+  dct:description "Observation whose result is an integer" ;
+  rdfs:comment "Observation whose result is an integer" ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om> ;
+  rdfs:label "Count Observation"@en ;
+  rdfs:subClassOf sosa:Observation ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom om:CountObject ;
+      owl:onProperty sosa:hasResult ;
+    ] ;
+.
+om:GeometryObject
+  rdf:type owl:Class ;
+  dct:description "Geometry object has properties relating to geometry, incuding positional and topological attributes, reference system, accuracy and precision. Might be geolocated. " ;
+  rdfs:comment "This stub is included in the om: ontology to support references to geometry as the result of a GeometryObservation.  An existing OWL class that represents the notion of a geometry may be asserted to be a sub-class of this stub, without requiring use of a specific representation of Geometry in the context of observations instance." ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om> ;
+  rdfs:label "Geometry object" ;
+  rdfs:subClassOf owl:Thing ;
+.
+om:GeometryObservation
+  rdf:type owl:Class ;
+  dct:description "Observation whose result is a geometry object, such as a point, curve, surface or solid" ;
+  rdfs:comment "Observation whose result is a geometry object, such as a point, curve, surface or solid" ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om> ;
+  rdfs:label "Geometry Observation"@en ;
+  rdfs:subClassOf sosa:Observation ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom om:GeometryObject ;
+      owl:onProperty sosa:hasResult ;
+    ] ;
+.
+om:MeasureObject
+  rdf:type owl:Class ;
+  dct:description "Scaled number" ;
+  rdfs:comment """Scaled number
+
+This is an abstract class, which should be substituted by a suitable concrete representation of a measure or quantity at run-tme. 
+
+oml:SimpleMeasure 
+qudt:QuantityValue <http://qudt.org/schema/qudt#QuantityValue> 
+DUL:Region <http://www.loa-cnr.it/ontologies/DUL.owl#Region> 
+
+are candidates. """ ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om> ;
+  rdfs:label "Measure" ;
+.
+om:Measurement
+  rdf:type owl:Class ;
+  dct:description "Observation whose result is a scaled number" ;
+  rdfs:comment "Observation whose result is a scaled number" ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om> ;
+  rdfs:label "Measurement"@en ;
+  rdfs:label "Mesure"@fr ;
+  rdfs:subClassOf sosa:Observation ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom om:MeasureObject ;
+      owl:onProperty sosa:hasResult ;
+    ] ;
+.
+om:ObservationCollection
+  rdf:type owl:Class ;
+  dct:description """A collection of observations  or collections. 
+
+The collection may be homogeneous any of the feature-of-interest, observed-property, procedure, phenomenon-time or result-time. If only one value for any of these properties is provided on the collection, then it may be inferred to be a common (default) value for all the member observations or collections, unless locally overridden.""" ;
+  rdfs:comment """A collection of observations  or collections. 
+
+The collection may be homogeneous in any of the feature-of-interest, observed-property, procedure, phenomenon-time or result-time. If only one value for any of these properties is provided on the collection, then it may be inferred to be a common (default) value for all the member observations or collections, unless locally overridden.""" ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om> ;
+  rdfs:label "Collection of observations"@en ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty om:stimulusTime ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty sosa:hasFeatureOfInterest ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty sosa:observedProperty ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty sosa:phenomenonTime ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty sosa:resultTime ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty sosa:usedProcedure ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty om:member ;
+    ] ;
+.
+om:ObservationContext
+  rdf:type owl:Class ;
+  dct:description "Context linking two or more observations" ;
+  rdfs:comment """Some observations depend on other observations to provide context which is important, sometimes essential, in understanding the result. These dependencies are stronger than mere spatio-temporal coincidences, requiring explicit representation. If present, the association class class ObservationContext (Figure 2) shall link a OM_Observation to another OM_Observation, with the role name relatedObservation for the target. It shall support one attribute.
+
+EXAMPLES	Some examples include the conditions associated with experimental replicates (e.g., experimental plots and treatments used), biotic factors (e.g., ecological community), interactions among features (e.g., predator-prey), or other temporary relationships occurring at the time of observation that are are not inherent to the observed features themselves (i.e., they change over time), or the related observation may provide input to a process that generates a new result.
+This association complements the Intention association which describes relationships between a sampling feature and domain features.""" ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om> ;
+  rdfs:label "Observation context"@en ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty om:relatedObservation ;
+    ] ;
+.
+om:SimpleMeasure
+  rdf:type owl:Class ;
+  dct:description "Simple implementation of a scaled number as an (amount, unit) pair" ;
+  rdfs:comment "Simple implementation of a scaled number as an (amount, unit) pair" ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om> ;
+  rdfs:label "Simple measure (quantity)" ;
+  rdfs:subClassOf om:MeasureObject ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty om:uom ;
+    ] ;
+  owl:equivalentClass [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty om:amount ;
+    ] ;
+.
+om:TemporalObservation
+  rdf:type owl:Class ;
+  dct:description "Observation whose result is a temporal object, such as a time instant or period" ;
+  rdfs:comment "Observation whose result is a temporal object, such as a time instant or period" ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om> ;
+  rdfs:label "Temporal Observation"@en ;
+  rdfs:subClassOf sosa:Observation ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom time:TemporalEntity ;
+      owl:onProperty sosa:hasResult ;
+    ] ;
+.
+om:TruthObject
+  rdf:type owl:Class ;
+  rdfs:comment "Object to wrap a truth value" ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om> ;
+  rdfs:label "Truth object" ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty om:truth ;
+    ] ;
+.
+om:TruthObservation
+  rdf:type owl:Class ;
+  dct:description "Observation whose result is either true or false" ;
+  rdfs:comment "Observation whose result is either true or false" ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om> ;
+  rdfs:label "Truth Observation"@en ;
+  rdfs:subClassOf sosa:Observation ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom om:TruthObject ;
+      owl:onProperty sosa:hasResult ;
+    ] ;
+.
+om:amount
+  rdf:type owl:DatatypeProperty ;
+  rdfs:domain om:SimpleMeasure ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om> ;
+  rdfs:label "numeric amount value" ;
+  rdfs:range xsd:double ;
+.
+om:context
+  rdf:type owl:ObjectProperty ;
+  dct:description "link to related observation" ;
+  rdfs:comment """link to related observation
+
+The first half of the property named 'relatedObservation' in the UML model. (The rule for implementing association classes needs clarification.)""" ;
+  rdfs:domain [
+      rdf:type owl:Class ;
+      owl:unionOf (
+          sosa:Observation
+          om:ObservationCollection
+        ) ;
+    ] ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om> ;
+  rdfs:label "observation context"@en ;
+  rdfs:range om:ObservationContext ;
+.
+om:count
+  rdf:type owl:DatatypeProperty ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om> ;
+  rdfs:label "Count value" ;
+  rdfs:range xsd:integer ;
+.
+om:member
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "links from a collection to a member collection or observation" ;
+  rdfs:domain om:ObservationCollection ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om> ;
+  rdfs:label "has member" ;
+  rdfs:range [
+      rdf:type owl:Class ;
+      owl:unionOf (
+          sosa:Observation
+          om:ObservationCollection
+        ) ;
+    ] ;
+.
+om:memberOf
+  rdf:type owl:ObjectProperty ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om> ;
+  rdfs:label "is member of" ;
+  owl:inverseOf om:member ;
+.
+om:relatedObservation
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "related observation" ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om> ;
+  rdfs:label "related observation"@en ;
+  rdfs:range sosa:Observation ;
+.
+om:role
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "role of related observation with respect to the observation of interest" ;
+  rdfs:domain om:ObservationContext ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om> ;
+  rdfs:label "role"@en ;
+.
+om:samplingStrategy
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment """Links to a feature intended to sample the real-world object, as described in Clause 9 of ISO 19156:2011. 
+
+N.B. this formulation varies from the UML model in ISO 19156, in which a sampling-feature is substitutable for the feature-of-interest. In this more explicit formulation, the (mandatory) feature-of-interest always refers to the ultimate feature of interest, whose type can carry the observed property, and the (optional) sampling strategy allows the sampling feature to be made explicit as an additional relationship. This overcomes some semantic sleight-of-hand in ISO 19156, in which the constraint the the observed property was commensurate with the feature-of-interest was allowed to be 'transitive' via the sampledFeature property.""" ;
+  rdfs:comment "description of the sampling strategy used in an observation (usually a sampling-feature). " ;
+  rdfs:domain [
+      rdf:type owl:Class ;
+      owl:unionOf (
+          sosa:Observation
+          om:ObservationCollection
+        ) ;
+    ] ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om> ;
+  rdfs:label "sampling strategy"@en ;
+  skos:definition "Links to a feature intended to sample the real-world object, as described in Clause 9 of ISO 19156:2011. " ;
+.
+om:stimulusTime
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "the time when the sensor stimulus occurred. Usually the beginning of the observation activity (the result time is the end). " ;
+  rdfs:domain [
+      rdf:type owl:Class ;
+      owl:unionOf (
+          sosa:Observation
+          om:ObservationCollection
+        ) ;
+    ] ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om> ;
+  rdfs:label "Stimulus time" ;
+  rdfs:range time:TemporalEntity ;
+  skos:definition """the time when the sensor stimulus occurred. Usually the beginning of the observation activity, with the result time being the end. May be the same as the phenomenon-time (e.g. most monitoring applications). May define the time of observations used to condition simulations and forecasting. 
+
+The relative positions of stimulus-time, phenomenon-time, result-time define whether the observation is monitoring, forecasting, or retrospective, as follows:
+* st = pt <= rt    is monitoring
+* st < rt < pt   is forecast
+* pt < st <=rt   is retrospective (e.g. geology, archeology) """ ;
+  skos:historyNote "This property was introduced after discussions in the jint W3C/OGC Spatial Data on the Web Working Group in October 2016" ;
+.
+om:truth
+  rdf:type owl:DatatypeProperty ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om> ;
+  rdfs:label "Truth value" ;
+  rdfs:range xsd:boolean ;
+.
+om:uom
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "Unit of measure or scale" ;
+  rdfs:domain [
+      rdf:type owl:Class ;
+      owl:unionOf (
+          om:SimpleMeasure
+          om:ObservationCollection
+        ) ;
+    ] ;
+  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om> ;
+.
